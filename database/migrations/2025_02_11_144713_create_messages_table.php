@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('messages', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('sender_id')->constrained('users')->onDelete('cascade'); // Usuario remitente
-            $table->foreignId('receiver_id')->constrained('users')->onDelete('cascade'); // Usuario destinatario
-            $table->text('content'); // Contenido del mensaje
-            $table->boolean('is_read')->default(false); // Estado del mensaje
+            $table->foreignId('sender_id')->constrained('users')->onDelete('cascade'); 
+            $table->foreignId('receiver_id')->constrained('users')->onDelete('cascade'); 
+            $table->text('content'); 
+            $table->boolean('is_read')->default(false); 
             $table->timestamps();
             });
     }

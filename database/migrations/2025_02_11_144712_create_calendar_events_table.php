@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('calendar_events', function (Blueprint $table) {
             $table->id();
-            $table->string('title'); // Nombre del evento
-            $table->text('description')->nullable(); // Descripción opcional
-            $table->dateTime('start'); // Fecha y hora de inicio
-            $table->dateTime('end'); // Fecha y hora de finalización
-            $table->foreignId('user_id')->constrained()->onDelete('cascade'); // Usuario que crea el evento
+            $table->string('title');
+            $table->text('description')->nullable(); 
+            $table->dateTime('start');
+            $table->dateTime('end'); 
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->timestamps();
             });
     }

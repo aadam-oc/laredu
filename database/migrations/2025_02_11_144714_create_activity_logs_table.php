@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('activity_logs', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->nullable()->constrained()->onDelete('cascade'); // Usuario responsable
-            $table->string('table_name'); // Tabla afectada
-            $table->text('changes'); // Descripción de los cambios
+            $table->foreignId('user_id')->nullable()->constrained()->onDelete('cascade'); 
+            $table->string('table_name'); 
+            $table->text('changes'); 
             $table->timestamps();
             });
     }

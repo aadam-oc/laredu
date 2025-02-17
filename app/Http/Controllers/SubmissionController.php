@@ -15,25 +15,24 @@ class SubmissionController extends Controller
      * Create a new submission (Registrar una entrega).
      */
     public function store(Request $request)
-{
-    // Verifica si se está ejecutando
-    \Log::info('Store method reached');
-    dd($request->all());  // Esto detendrá la ejecución y mostrará los datos recibidos
+    {
+        \Log::info('Store method reached');
+        dd($request->all());
 
-    $validated = $request->validate([
-        'user_id' => 'required|exists:users,id',
-        'assignment_id' => 'required|exists:assignments,id',
-        'grade' => 'nullable|numeric',
-    ]);
+        $validated = $request->validate([
+            'user_id' => 'required|exists:users,id',
+            'assignment_id' => 'required|exists:assignments,id',
+            'grade' => 'nullable|numeric',
+        ]);
 
-    $submission = Submission::create([
-        'user_id' => $validated['user_id'],
-        'assignment_id' => $validated['assignment_id'],
-        'grade' => $validated['grade'] ?? null,
-    ]);
+        $submission = Submission::create([
+            'user_id' => $validated['user_id'],
+            'assignment_id' => $validated['assignment_id'],
+            'grade' => $validated['grade'] ?? null,
+        ]);
 
-    return response()->json(['message' => 'Submission created successfully', 'submission' => $submission], 201);
-}
+        return response()->json(['message' => 'Submission created successfully', 'submission' => $submission], 201);
+    }
     /**
      * Show a specific submission (Mostrar entrega).
      */

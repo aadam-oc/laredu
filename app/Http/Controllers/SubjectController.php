@@ -18,15 +18,15 @@ class SubjectController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'course_id' => 'required|exists:courses,id',
-            'teacher_id' => 'required|exists:users,id',  // Verifica que el profesor exista
+            'teacher_id' => 'required|exists:users,id',
         ]);
-    
+
         $subject = Subject::create([
             'name' => $request->name,
             'course_id' => $request->course_id,
             'teacher_id' => $request->teacher_id,
         ]);
-    
+
         return response()->json([
             'message' => 'Subject created successfully',
             'subject' => $subject
@@ -54,7 +54,6 @@ class SubjectController extends Controller
             return response()->json(['message' => 'Subject not found'], 404);
         }
 
-        // Actualiza solo el nombre de la asignatura
         $subject->update($request->only('name'));
 
         return response()->json([
@@ -71,7 +70,6 @@ class SubjectController extends Controller
             return response()->json(['message' => 'Subject not found'], 404);
         }
 
-        // Elimina la asignatura
         $subject->delete();
 
         return response()->json(['message' => 'Subject deleted successfully'], 200);

@@ -8,10 +8,8 @@ class Permission extends Model
     protected $fillable = [
         'name'
     ];
-    // Relación con roles a través de role_permissions
     public function roles()
     {
-        // Un permiso puede asociarse a varios roles
         return $this->belongsToMany(Role::class, 'role_permissions');
     }
 }

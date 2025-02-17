@@ -12,9 +12,9 @@ return new class extends Migration
     {
         Schema::create('attendance', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade'); // Estudiante
-            $table->foreignId('calendar_event_id')->constrained()->onDelete('cascade'); // Evento asociado (clase)
-            $table->enum('status', ['present', 'absent', 'late']); //Estado de asistencia
+            $table->foreignId('user_id')->constrained()->onDelete('cascade'); 
+            $table->foreignId('calendar_event_id')->constrained()->onDelete('cascade'); 
+            $table->enum('status', ['present', 'absent', 'late']); 
             $table->timestamps();
         });
     }

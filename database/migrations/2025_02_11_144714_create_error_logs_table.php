@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('error_logs', function (Blueprint $table) {
             $table->id();
-            $table->text('error_message'); // Mensaje del error
-            $table->text('stack_trace'); // Detalles técnicos
+            $table->text('error_message');
+            $table->text('stack_trace');
             $table->timestamps();
             });
     }

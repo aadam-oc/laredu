@@ -11,7 +11,7 @@ class SubjectsTableSeeder extends Seeder
     {
         Subject::create([
             'name' => 'Matemáticas',
-            'course_id' => 1,  // Ajusta el ID si es necesario
+            'course_id' => 1,  
             'teacher_id' => 1
         ]);
 

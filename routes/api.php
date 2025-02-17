@@ -11,13 +11,13 @@ use App\Http\Controllers\MessageController;
 use App\Http\Controllers\RoleController;
 
 // Rutas públicas (No requieren token)
-Route::post('/register', [AuthController::class, 'register']); // Registro
-Route::post('/login', [AuthController::class, 'login']); // Login
+Route::post('/register', [AuthController::class, 'register']); 
+Route::post('/login', [AuthController::class, 'login']);
 
 // Rutas protegidas (Requieren token)
 Route::middleware('auth:sanctum')->group(function () {
-    Route::post('/logout', [AuthController::class, 'logout']); // Logout
-    Route::get('/me', [AuthController::class, 'me']); // Obtener datos del usuario autenticado
+    Route::post('/logout', [AuthController::class, 'logout']); 
+    Route::get('/me', [AuthController::class, 'me']); 
 
     // CRUD de asignaturas
     Route::prefix('subjects')->group(function () {

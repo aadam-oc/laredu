@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('course_id')->constrained()->onDelete('cascade');
-            $table->enum('role', ['teacher', 'student']); // Determina siel usuario es profesor o estudiante
+            $table->enum('role', ['teacher', 'student']); 
             $table->timestamps();
             });
     }

@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('assignments', function (Blueprint $table) {
             $table->id();
-            $table->string('title'); // Título de la tarea
-            $table->text('description')->nullable();// Descripción de la tarea
-            $table->dateTime('due_date'); // Fecha de entrega
-            $table->foreignId('subject_id')->constrained()->onDelete('cascade'); // Relación con asignatura
+            $table->string('title'); 
+            $table->text('description')->nullable();
+            $table->dateTime('due_date'); 
+            $table->foreignId('subject_id')->constrained()->onDelete('cascade'); 
             $table->timestamps();
             });
     }

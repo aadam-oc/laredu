@@ -6,8 +6,8 @@ use Illuminate\Support\Facades\Auth;
 class MessageController extends Controller
 {
     /**
-    * Get messages of the authenticated user (Obtener mensajes del usuario autenticado).
-    */
+     * Get messages of the authenticated user (Obtener mensajes del usuario autenticado).
+     */
     public function index(Request $request)
     {
         $userId = $request->user()->id;
@@ -21,25 +21,23 @@ class MessageController extends Controller
      * Send a new message (Enviar mensaje).
      */
     public function store(Request $request)
-{
-    // Validación
-    $request->validate([
-        'receiver_id' => 'required|exists:users,id',
-        'content' => 'required|string'
-    ]);
+    {
+        $request->validate([
+            'receiver_id' => 'required|exists:users,id',
+            'content' => 'required|string'
+        ]);
 
-    // Crear el mensaje
-    $message = Message::create([
-        'sender_id' => Auth::id(), // Se obtiene automáticamente del usuario autenticado
-        'receiver_id' => $request->receiver_id,
-        'content' => $request->content,
-    ]);
+        $message = Message::create([
+            'sender_id' => Auth::id(),
+            'receiver_id' => $request->receiver_id,
+            'content' => $request->content,
+        ]);
 
-    return response()->json([
-        'message' => 'Message sent successfully',
-        'message_data' => $message
-    ], 201);
-}
+        return response()->json([
+            'message' => 'Message sent successfully',
+            'message_data' => $message
+        ], 201);
+    }
 
     /**
     * Get conversation between current user and a specific user

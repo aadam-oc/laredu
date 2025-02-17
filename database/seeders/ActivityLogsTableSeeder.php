@@ -15,21 +15,21 @@ class ActivityLogsTableSeeder extends Seeder
     public function run()
     {
         ActivityLog::create([
-            'user_id' => 1, // ID del usuario responsable
-            'table_name' => 'users', // Tabla afectada
-            'changes' => 'Created a new user with ID 1', // Descripción de los cambios
+            'user_id' => 1, 
+            'table_name' => 'users', 
+            'changes' => 'Created a new user with ID 1', 
         ]);
 
         ActivityLog::create([
-            'user_id' => 2, // ID del usuario responsable
-            'table_name' => 'courses', // Tabla afectada
-            'changes' => 'Updated course details for course ID 101', // Descripción de los cambios
+            'user_id' => 2, 
+            'table_name' => 'courses', 
+            'changes' => 'Updated course details for course ID 101', 
         ]);
 
         ActivityLog::create([
-            'user_id' => 1, // ID del usuario responsable
-            'table_name' => 'assignments', // Tabla afectada
-            'changes' => 'Created a new assignment with ID 5', // Descripción de los cambios
+            'user_id' => 1, 
+            'table_name' => 'assignments', 
+            'changes' => 'Created a new assignment with ID 5',
         ]);
     }
 }

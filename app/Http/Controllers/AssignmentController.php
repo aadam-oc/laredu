@@ -19,24 +19,21 @@ class AssignmentController extends Controller
      * Create a new assignment (Crear una nueva tarea).
      */
     public function store(Request $request)
-{
-    // Valida los datos de la solicitud
-    $validated = $request->validate([
-        'user_id' => 'required|exists:users,id',
-        'assignment_id' => 'required|exists:assignments,id',
-        'grade' => 'nullable|numeric', // Si el grade es proporcionado, debe ser un número
-    ]);
+    {
+        $validated = $request->validate([
+            'user_id' => 'required|exists:users,id',
+            'assignment_id' => 'required|exists:assignments,id',
+            'grade' => 'nullable|numeric',
+        ]);
 
-    // Crea la nueva submission
-    $submission = Submission::create([
-        'user_id' => $validated['user_id'],
-        'assignment_id' => $validated['assignment_id'],
-        'grade' => $validated['grade'] ?? null, // Si no se proporciona grade, se deja null
-    ]);
+        $submission = Submission::create([
+            'user_id' => $validated['user_id'],
+            'assignment_id' => $validated['assignment_id'],
+            'grade' => $validated['grade'] ?? null,
+        ]);
 
-    // Devuelve la respuesta con los datos de la submission creada
-    return response()->json(['message' => 'Submission created successfully', 'submission' => $submission], 201);
-}
+        return response()->json(['message' => 'Submission created successfully', 'submission' => $submission], 201);
+    }
 
 
     /**
@@ -68,7 +65,6 @@ class AssignmentController extends Controller
             ], 404);
         }
 
-        // Validación de los datos de la actualización
         $validated = $request->validate([
             'title' => 'nullable|string|max:255',
             'description' => 'nullable|string',
@@ -76,7 +72,6 @@ class AssignmentController extends Controller
             'subject_id' => 'nullable|exists:subjects,id',
         ]);
 
-        // Actualizar tarea
         $assignment->update($validated);
 
         return response()->json([

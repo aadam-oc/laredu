@@ -15,11 +15,9 @@ class NotificationsTableSeeder extends Seeder
      */
     public function run()
     {
-        // Obtener un usuario de ejemplo
         $user = User::first();
 
         if ($user) {
-            // Crear algunas notificaciones
             Notification::create([
                 'user_id' => $user->id,
                 'type' => 'alert',
