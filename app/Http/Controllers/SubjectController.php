@@ -7,12 +7,18 @@ use Illuminate\Http\Request;
 
 class SubjectController extends Controller
 {
+    /**
+     * Obtener todas las asignaturas.
+     */
     public function index()
     {
-        return response()->json(Subject::all(), 200);
+        $subjects = Subject::with(['course', 'teacher'])->get();
+        return response()->json($subjects);
     }
 
-
+    /**
+     * Crear una nueva asignatura.
+     */
     public function store(Request $request)
     {
         $request->validate([
@@ -21,31 +27,28 @@ class SubjectController extends Controller
             'teacher_id' => 'required|exists:users,id',
         ]);
 
-        $subject = Subject::create([
-            'name' => $request->name,
-            'course_id' => $request->course_id,
-            'teacher_id' => $request->teacher_id,
-        ]);
+        $subject = Subject::create($request->all());
 
-        return response()->json([
-            'message' => 'Subject created successfully',
-            'subject' => $subject
-        ], 201);
+        return response()->json($subject, 201);
     }
 
-
-
+    /**
+     * Obtener una asignatura por ID.
+     */
     public function show($id)
     {
-        $subject = Subject::find($id);
+        $subject = Subject::with(['course', 'teacher'])->find($id);
 
         if (!$subject) {
             return response()->json(['message' => 'Subject not found'], 404);
         }
 
-        return response()->json($subject, 200);
+        return response()->json($subject);
     }
 
+    /**
+     * Actualizar una asignatura.
+     */
     public function update(Request $request, $id)
     {
         $subject = Subject::find($id);
@@ -54,14 +57,20 @@ class SubjectController extends Controller
             return response()->json(['message' => 'Subject not found'], 404);
         }
 
-        $subject->update($request->only('name'));
+        $request->validate([
+            'name' => 'string|max:255',
+            'course_id' => 'exists:courses,id',
+            'teacher_id' => 'exists:users,id',
+        ]);
 
-        return response()->json([
-            'message' => 'Subject updated successfully',
-            'subject' => $subject
-        ], 200);
+        $subject->update($request->all());
+
+        return response()->json($subject);
     }
 
+    /**
+     * Eliminar una asignatura.
+     */
     public function destroy($id)
     {
         $subject = Subject::find($id);
@@ -72,6 +81,6 @@ class SubjectController extends Controller
 
         $subject->delete();
 
-        return response()->json(['message' => 'Subject deleted successfully'], 200);
+        return response()->json(['message' => 'Subject deleted successfully']);
     }
 }

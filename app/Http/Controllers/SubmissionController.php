@@ -1,87 +1,50 @@
 <?php
+
 namespace App\Http\Controllers;
-use App\Models\Submission;
+
 use Illuminate\Http\Request;
+use App\Models\Submission;
+
 class SubmissionController extends Controller
 {
-    /**
-     * Get all submissions (Obtener todas las entregas).
-     */
     public function index()
     {
-        return response()->json(Submission::all(), 200);
+        return Submission::with(['user', 'assignment'])->get();
     }
-    /**
-     * Create a new submission (Registrar una entrega).
-     */
+
     public function store(Request $request)
     {
-        \Log::info('Store method reached');
-        dd($request->all());
-
         $validated = $request->validate([
             'user_id' => 'required|exists:users,id',
             'assignment_id' => 'required|exists:assignments,id',
-            'grade' => 'nullable|numeric',
+            'submitted_at' => 'nullable|date',
+            'grade' => 'nullable|numeric|min:0|max:100',
         ]);
 
-        $submission = Submission::create([
-            'user_id' => $validated['user_id'],
-            'assignment_id' => $validated['assignment_id'],
-            'grade' => $validated['grade'] ?? null,
-        ]);
-
-        return response()->json(['message' => 'Submission created successfully', 'submission' => $submission], 201);
+        return Submission::create($validated);
     }
-    /**
-     * Show a specific submission (Mostrar entrega).
-     */
+
     public function show($id)
     {
-        $submission = Submission::find($id);
-        if (!$submission) {
-            return response()->json([
-                'message' => 'Submission not
-    found'
-            ], 404);
-        }
-        return response()->json($submission, 200);
+        return Submission::with(['user', 'assignment'])->findOrFail($id);
     }
-    /**
-     * Update submission (e.g. grading) (Actualizar entrega).
-     */
+
     public function update(Request $request, $id)
     {
-        $submission = Submission::find($id);
-        if (!$submission) {
-            return response()->json([
-                'message' => 'Submission not
-    found'
-            ], 404);
-        }
-        $request->validate([
-            'grade' => 'required|numeric|min:0|max:10',
+        $submission = Submission::findOrFail($id);
+        $validated = $request->validate([
+            'grade' => 'nullable|numeric|min:0|max:100',
         ]);
-        $submission->update($request->only(['grade']));
-        return response()->json([
-            'message' => 'Grade updated successfully',
-            'submission' => $submission
-        ], 200);
+
+        $submission->update($validated);
+        return $submission;
     }
 
-    /**
-     * Delete a specific submission (Eliminar una entrega).
-     */
     public function destroy($id)
     {
-        $submission = Submission::find($id);
-
-        if (!$submission) {
-            return response()->json(['message' => 'Submission not found'], 404);
-        }
-
+        $submission = Submission::findOrFail($id);
         $submission->delete();
 
-        return response()->json(['message' => 'Submission deleted successfully'], 200);
+        return response()->json(['message' => 'Submission deleted successfully'], 204);
     }
 }

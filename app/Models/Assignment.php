@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -9,4 +10,9 @@ class Assignment extends Model
     use HasFactory;
 
     protected $fillable = ['title', 'description', 'due_date', 'subject_id'];
+
+    public function subject()
+    {
+        return $this->belongsTo(Subject::class);
+    }
 }

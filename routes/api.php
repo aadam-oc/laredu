@@ -11,7 +11,7 @@ use App\Http\Controllers\MessageController;
 use App\Http\Controllers\RoleController;
 
 // Rutas públicas (No requieren token)
-Route::post('/register', [AuthController::class, 'register']); 
+Route::post('/register', action: [AuthController::class, 'register']); 
 Route::post('/login', [AuthController::class, 'login']);
 
 // Rutas protegidas (Requieren token)
@@ -43,6 +43,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/', [SubmissionController::class, 'store']);
         Route::get('/{id}', [SubmissionController::class, 'show']);
         Route::put('/{id}', [SubmissionController::class, 'update']);
+        Route::delete('/{id}', [SubmissionController::class, 'destroy']);   
     });
 
     // CRUD de eventos del calendario
