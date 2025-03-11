@@ -14,6 +14,10 @@ class SubmissionController extends Controller
 
     public function store(Request $request)
     {
+        $submittedAt = $request->input('submitted_at');
+        if ($submittedAt === null) {
+            $submittedAt = now(); 
+        }
         $validated = $request->validate([
             'user_id' => 'required|exists:users,id',
             'assignment_id' => 'required|exists:assignments,id',
